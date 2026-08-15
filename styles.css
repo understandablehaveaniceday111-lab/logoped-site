@@ -428,7 +428,7 @@ p {
   padding: 24px 20px;
   border-radius: 22px;
   background: linear-gradient(135deg, #ffffff, #f4efff);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(127, 90, 240, 0.18);
   box-shadow: 0 12px 24px rgba(31, 36, 48, 0.03);
 }
 
@@ -438,7 +438,18 @@ p {
 }
 
 .price-item p {
-  margin-bottom: 0;
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.price-item span {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .card-grid {
@@ -451,8 +462,23 @@ p {
   padding: 28px 24px;
   border-radius: 24px;
   background: var(--white);
-  border: 1px solid rgba(127, 90, 240, 0.08);
+  border: 1px solid rgba(127, 90, 240, 0.12);
   box-shadow: 0 12px 28px rgba(31, 36, 48, 0.04);
+}
+
+.service-list {
+  position: relative;
+}
+
+.service-list .service-card {
+  border-top: 1px solid rgba(127, 90, 240, 0.18);
+  border-left: 1px solid rgba(127, 90, 240, 0.18);
+  border-bottom: 1px solid rgba(127, 90, 240, 0.12);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.service-heading {
+  margin-top: 32px;
 }
 
 .icon {
@@ -471,31 +497,72 @@ p {
   letter-spacing: 0.08em;
 }
 
-.steps {
+.roadmap {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
 }
 
-.step {
-  padding: 28px 22px;
-  background: var(--white);
-  border: 1px solid var(--line);
+.roadmap-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 24px 22px;
+  border: 1px solid rgba(127, 90, 240, 0.2);
   border-radius: 22px;
-  box-shadow: 0 8px 24px rgba(31, 36, 48, 0.03);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 24px rgba(31, 36, 48, 0.04);
 }
 
-.step span {
+.roadmap-badge {
   display: inline-flex;
-  width: 52px;
-  height: 52px;
   align-items: center;
   justify-content: center;
+  width: 52px;
+  height: 52px;
   border-radius: 14px;
-  background: var(--secondary);
+  background: linear-gradient(135deg, rgba(127, 90, 240, 0.12), rgba(127, 90, 240, 0.2));
   color: var(--primary-dark);
   font-weight: 700;
-  margin-bottom: 16px;
+}
+
+.roadmap-content h3 {
+  margin-bottom: 8px;
+}
+
+.roadmap-content p {
+  margin: 0;
+}
+
+.roadmap-arrow {
+  position: relative;
+  display: none;
+}
+
+.roadmap-arrow::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(127, 90, 240, 0.18), rgba(127, 90, 240, 0.5));
+  transform: translate(-50%, -50%);
+}
+
+.roadmap-arrow::after {
+  content: "";
+  position: absolute;
+  right: 14%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid rgba(127, 90, 240, 0.6);
+  border-right: 2px solid rgba(127, 90, 240, 0.6);
+  transform: translateY(-50%) rotate(45deg);
 }
 
 .review-grid {
@@ -648,7 +715,7 @@ p {
   .footer-grid,
   .card-grid,
   .review-grid,
-  .steps,
+  .roadmap,
   .price-box {
     grid-template-columns: 1fr 1fr;
   }
@@ -659,7 +726,8 @@ p {
 
   .about-box,
   .faq-wrap,
-  .footer-grid {
+  .footer-grid,
+  .roadmap {
     grid-template-columns: 1fr;
   }
 }
@@ -752,9 +820,14 @@ p {
 
   .card-grid,
   .review-grid,
-  .steps,
+  .roadmap,
   .price-box {
     grid-template-columns: 1fr;
+  }
+
+  .roadmap-arrow {
+    display: block;
+    height: 16px;
   }
 
   .photo-card img {
