@@ -8,6 +8,30 @@ document.addEventListener("DOMContentLoaded", () => {
     yearNode.textContent = new Date().getFullYear();
   }
 
+  const revealItems = document.querySelectorAll(".reveal");
+
+  if (revealItems.length) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.18,
+        rootMargin: "0px 0px -30px 0px",
+      }
+    );
+
+    revealItems.forEach((item, index) => {
+      item.style.transitionDelay = `${index * 70}ms`;
+      revealObserver.observe(item);
+    });
+  }
+
   if (!header || !navToggle || !navMenu) return;
 
   let lastScrollY = window.scrollY;
