@@ -22,7 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+    if (navMenu.classList.contains("is-open")) {
+      header.classList.remove("header-hidden");
+    } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
       header.classList.add("header-hidden");
     } else {
       header.classList.remove("header-hidden");
@@ -32,7 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   navToggle.addEventListener("click", () => {
-    const isOpen = navMenu.classList.toggle("is-open");
+    const isOpen = !navMenu.classList.contains("is-open");
+    navMenu.classList.toggle("is-open", isOpen);
+    header.classList.toggle("header-hidden", !isOpen && window.innerWidth <= 640);
     navToggle.setAttribute("aria-expanded", String(isOpen));
   });
 
@@ -40,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => {
       navMenu.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
+      updateHeaderState();
     });
   });
 
