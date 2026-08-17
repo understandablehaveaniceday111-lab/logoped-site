@@ -26,6 +26,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 img {
@@ -50,6 +51,47 @@ a {
 .section-shell {
   position: relative;
   overflow: hidden;
+}
+
+.photo-waterfall {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.waterfall-item {
+  position: absolute;
+  top: 0;
+  left: var(--left);
+  width: min(var(--size), 12vw);
+  height: auto;
+  opacity: 0;
+  filter: drop-shadow(0 8px 12px rgba(31, 36, 48, 0.12));
+  transform: translate3d(0, -180px, 0) rotate(var(--tilt));
+  will-change: transform, opacity;
+  animation: photoWaterfall var(--duration) linear var(--delay) infinite;
+}
+
+@keyframes photoWaterfall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -180px, 0) rotate(var(--tilt));
+  }
+  10% {
+    opacity: 0.46;
+  }
+  50% {
+    opacity: 0.58;
+  }
+  88% {
+    opacity: 0.42;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), calc(100vh + 180px), 0) rotate(var(--tilt));
+  }
 }
 
 .section-shell > .container,
@@ -821,6 +863,43 @@ p {
 }
 
 @media (max-width: 640px) {
+  .waterfall-item {
+    width: min(var(--size), 19vw);
+    opacity: 0;
+  }
+
+  .waterfall-item:nth-child(3),
+  .waterfall-item:nth-child(5),
+  .waterfall-item:nth-child(7),
+  .waterfall-item:nth-child(9) {
+    display: none;
+  }
+
+  .hero-note {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .hero-tagline {
+    font-size: 0.8rem;
+  }
+
+  .hero-pointer {
+    width: 72px;
+    height: 22px;
+  }
+
+  .hero-pointer-line {
+    top: 9px;
+    transform: rotate(-16deg);
+  }
+
+  .hero-pointer-tip {
+    top: 8px;
+    width: 10px;
+    height: 10px;
+  }
+
   .section {
     padding: 76px 0;
   }
@@ -925,6 +1004,13 @@ p {
 
   .photo-card img {
     height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waterfall-item {
+    animation: none;
+    display: none;
   }
 }
 
