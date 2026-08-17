@@ -71,28 +71,6 @@ a {
   filter: drop-shadow(0 8px 12px rgba(31, 36, 48, 0.12));
   transform: translate3d(0, -180px, 0) rotate(var(--tilt));
   will-change: transform, opacity;
-  animation: photoWaterfall var(--duration) cubic-bezier(0.42, 0, 0.32, 1) var(--delay) infinite both;
-}
-
-@keyframes photoWaterfall {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -160px, 0) rotate(var(--tilt));
-  }
-  8% {
-    opacity: 0.66;
-  }
-  50% {
-    opacity: 0.76;
-    transform: translate3d(var(--drift), 50vh, 0) rotate(var(--tilt));
-  }
-  88% {
-    opacity: 0.58;
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(0, calc(112vh + 160px), 0) rotate(var(--tilt));
-  }
 }
 
 .section-shell > .container,
@@ -1010,7 +988,6 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .waterfall-item {
-    animation: none;
     display: none;
   }
 }

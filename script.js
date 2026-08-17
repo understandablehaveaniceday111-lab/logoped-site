@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector(".header");
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector(".nav-menu");
+  const waterfall = document.querySelector(".photo-waterfall");
+  const waterfallItems = document.querySelectorAll(".waterfall-item");
 
   if (yearNode) {
     yearNode.textContent = new Date().getFullYear();
@@ -30,6 +32,42 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.transitionDelay = `${index * 70}ms`;
       revealObserver.observe(item);
     });
+  }
+
+  if (waterfall && waterfallItems.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const startWaterfall = () => {
+      const waterfallHeight = Math.max(waterfall.clientHeight, window.innerHeight);
+
+      waterfallItems.forEach((item) => {
+        item.getAnimations().forEach((animation) => animation.cancel());
+
+        const itemStyle = getComputedStyle(item);
+        const duration = parseFloat(itemStyle.getPropertyValue("--duration")) * 1000;
+        const delay = parseFloat(itemStyle.getPropertyValue("--delay")) * 1000;
+        const drift = itemStyle.getPropertyValue("--drift").trim();
+        const tilt = itemStyle.getPropertyValue("--tilt").trim();
+
+        item.animate(
+          [
+            { opacity: 0, transform: `translate3d(0, -160px, 0) rotate(${tilt})` },
+            { offset: 0.08, opacity: 0.72, transform: `translate3d(0, 0, 0) rotate(${tilt})` },
+            { offset: 0.5, opacity: 0.82, transform: `translate3d(${drift}, ${Math.round(waterfallHeight * 0.5)}px, 0) rotate(${tilt})` },
+            { offset: 0.88, opacity: 0.62, transform: `translate3d(0, ${Math.round(waterfallHeight * 0.88)}px, 0) rotate(${tilt})` },
+            { opacity: 0, transform: `translate3d(0, ${waterfallHeight + 160}px, 0) rotate(${tilt})` },
+          ],
+          {
+            duration,
+            delay,
+            easing: "linear",
+            fill: "both",
+            iterations: Infinity,
+          }
+        );
+      });
+    };
+
+    startWaterfall();
+    window.addEventListener("resize", startWaterfall);
   }
 
   if (!header || !navToggle || !navMenu) return;
